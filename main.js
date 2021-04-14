@@ -45,10 +45,10 @@ function triAreaHeronSqr(a2, b2, c2) {
 function bary_X16_sqr(a2,b2,c2) {
   const sqrt3 = 1.7320508075688772;
   const area2 = triAreaHeronSqr(a2, b2, c2);
-  const S = 2 * Math.sqrt(area2);
-  const v1 = a2 * (2 * S + (a2 - b2 - c2) * sqrt3);
-  const v2 = b2 * (2 * S + (-a2 + b2 - c2) * sqrt3);
-  const v3 = c2 * (2 * S + (-a2 - b2 + c2) * sqrt3);
+  const twoS = 4 * Math.sqrt(area2);
+  const v1 = a2 * (twoS + (a2 - b2 - c2) * sqrt3);
+  const v2 = b2 * (twoS + (-a2 + b2 - c2) * sqrt3);
+  const v3 = c2 * (twoS + (-a2 - b2 + c2) * sqrt3);
   return [v1, v2, v3];
 }
 
