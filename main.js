@@ -99,7 +99,6 @@ function get_triple_X16_map_error(t0,t1,t2,M) {
     return d2;
 }
 
-
 function get_triple_X16_map_area_error(t0,t1,t2,M) {
   const [x1,y1,z1] = get_X16_map(t0,t1,t2,M);
   const [x2,y2,z2] = get_X16_map(x1,y1,z1,M);
@@ -109,8 +108,8 @@ function get_triple_X16_map_area_error(t0,t1,t2,M) {
   const a2 = triAreaHeronSqr(s2[0],s2[1],s2[2]);
   const a1 = triAreaHeronSqr(s1[0],s1[1],s1[2]);
   //const d2 = tri_dist_sqr(t0,t1,t2,x3,y3,z3);
-  return Math.log(1+a2/a1);
-}
+  return Math.log1p(a2/a1);
+};
 
 /*
 function get_triple_X16_map_error_no_work(tri0,M) {
@@ -164,6 +163,10 @@ const render = gpu.createKernel(function(tri) {
 .setConstants({ dim: 1024, max: 5 })
 .setGraphical(true)
 .setOutput([1024,1024]);
+//{ source: function, argumentTypes: object, returnType: string }
+//.setFunctions([{ source: get_triple_X16_map_error,
+//  argumentTypes:{ t0:'Array(2)', t1:'Array(2)', t2:'Array(2)', M:'Array(2)' }, returnType: 'Number' }]);
+// ??? kernel.setNativeFunctions(array)
 
 // equilateral
 const reg3 = [[1,0],[-.5,.866025],[-.5,-.866025]]; 
