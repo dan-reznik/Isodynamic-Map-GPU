@@ -106,9 +106,10 @@ function get_triple_X16_map_area_error(t0,t1,t2,M) {
   const [x3,y3,z3] = get_X16_map(x2,y2,z2,M)
   const s1=tri_sides_sqr(t0,t1,t2);
   const s2=tri_sides_sqr(x3,y3,z3);
-  const d2 = triAreaHeronSqr(s2[0],s2[1],s2[2])/triAreaHeronSqr(s1[0],s1[1],s1[2]);
+  const a2 = triAreaHeronSqr(s2[0],s2[1],s2[2]);
+  const a1 = triAreaHeronSqr(s1[0],s1[1],s1[2]);
   //const d2 = tri_dist_sqr(t0,t1,t2,x3,y3,z3);
-  return Math.log(1+d2);
+  return Math.log(1+a2/a1);
 }
 
 /*
@@ -155,7 +156,7 @@ const render = gpu.createKernel(function(tri) {
   let err = get_triple_X16_map_error(tri[0],tri[1],tri[2], [x, y]);
   //let err = get_triple_X16_map_area_error(tri[0],tri[1],tri[2], [x, y]);
   if (err<1e-9) this.color(0,0,1, 1); else this.color(.9,.9,.9, 1);
-  //this.color(255*err,255*err,255*err, 1);
+  //  this.color(clr,clr,clr, 1);
 }, {
   //argumentTypes: { t0:'Array(2)', t1:'Array(2)', t2:'Array(2)' },
   argumentTypes: { tri:'Array1D(2)' },
