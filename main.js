@@ -66,11 +66,7 @@ function get_X16_map(tri,M) {
     const p = get_X16(tri0);
     const q = get_X16(tri1);
     const r = get_X16(tri2);
-    const ret = [];
-    ret.push(p);
-    ret.push(q);
-    ret.push(r);
-    return ret;
+    return [p,q,r];
 }
 
 function tri_dist(t1,t2) { return dist2(t1[0],t2[0])+dist2(t1[1],t2[1])+dist2(t1[2],t2[2]); }
@@ -94,6 +90,7 @@ gpu.addFunction(barys_to_cartesian);
 gpu.addFunction(bary_X16);
 gpu.addFunction(get_X16);
 //gpu.addFunction(get_subtris);
+//gpu.addFunction(get_X16_map,{ argumentTypes: { tri:'Array2D(3)', M:'Array(2)' }, returnType: 'Array2D(3)' });
 gpu.addFunction(get_X16_map);
 gpu.addFunction(tri_dist);
 gpu.addFunction(get_triple_X16_map_error);
