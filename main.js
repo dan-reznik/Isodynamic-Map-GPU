@@ -127,8 +127,8 @@ const render = gpu.createKernel(function(t0,t1,t2) {
 }, {
   argumentTypes: { t0:'Array(2)', t1:'Array(2)', t2:'Array(2)' },
 })
-.setGraphical(true)
 .setConstants({ dim: 1024, max: 6 })
+.setGraphical(true)
 .setOutput([1024,1024]);
 
 // equilateral
