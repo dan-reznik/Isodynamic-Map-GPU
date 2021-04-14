@@ -79,6 +79,13 @@ function get_X16_map(t0,t1,t2,M) {
     return [p,q,r];
 }
 
+function get_X16_map_no_work(tri,M) {
+  const p = get_X16(M,tri[0],tri[1]);
+  const q = get_X16(M,tri[1],tri[2]);
+  const r = get_X16(M,tri[2],tri[0]);
+  return [p,q,r];
+}
+
 function tri_dist_sqr(p1,p2,p3,q1,q2,q3) { return dist2(p1,q1)+dist2(p2,q2)+dist2(p3,q3); }
 
 //function tri_dist_sqr(t1,t2) { return dist2(t1[0],t2[0])+dist2(t1[1],t2[1])+dist2(t1[3],t2[3]); }
@@ -90,6 +97,15 @@ function get_triple_X16_map_error(t0,t1,t2,M) {
     const d2 = tri_dist_sqr(t0,t1,t2,x3,y3,z3);
     //const d2 = tri_dist_sqr([t0,t1,t2],[x3,y3,z3]);
     return d2;
+}
+
+function get_triple_X16_map_error_no_work(tri0,M) {
+  const tri1 = get_X16_map(tri0,M);
+  const tri2 = get_X16_map(tri1,M);
+  const tri3 = get_X16_map(tri2,M);
+  const d2 = tri_dist_sqr(tri0[0],tri0[1],tri0[2],tri3[0],tri3[1],tri3[2]);
+  //const d2 = tri_dist_sqr([t0,t1,t2],[x3,y3,z3]);
+  return d2;
 }
 
 /*
@@ -113,7 +129,7 @@ gpu.addFunction(get_triple_X16_map_error,
   { argumentTypes: { t0:'Array(2)', t1:'Array(2)', t2:'Array(2)', M:'Array(2)' }, returnType: 'Number' });
 */
 
-const render = gpu.createKernel(function(t0,t1,t2) {
+const render = gpu.createKernel(function(tri) {
    let dim = 1024; // this.constants.dim
    let half_dim = dim>>1;
    let max = 6; // this.constants.max
@@ -122,10 +138,11 @@ const render = gpu.createKernel(function(t0,t1,t2) {
    let x = max*(i-half_dim)/dim;
    let y = max*(j-half_dim)/dim;
 
-  let err = get_triple_X16_map_error(t0,t1,t2, [x, y]);
+  let err = get_triple_X16_map_error(tri[0],tri[1],tri[2], [x, y]);
   if (err<1e-9) this.color(0,0,1, 1); else this.color(.9,.9,.9, 1);
 }, {
-  argumentTypes: { t0:'Array(2)', t1:'Array(2)', t2:'Array(2)' },
+  //argumentTypes: { t0:'Array(2)', t1:'Array(2)', t2:'Array(2)' },
+  argumentTypes: { tri:'Array1D(2)' },
 })
 .setConstants({ dim: 1024, max: 6 })
 .setGraphical(true)
@@ -134,7 +151,9 @@ const render = gpu.createKernel(function(t0,t1,t2) {
 // equilateral
 const reg3 = [[1,0],[-.5,.866025],[-.5,-.866025]]; 
 //render(new Float32Array(reg3[0]),new Float32Array(reg3[1]),new Float32Array(reg3[2]));
-render(reg3[0],reg3[1],reg3[2]);
+//render(reg3[0],reg3[1],reg3[2]);
+render(reg3);
+
 
 const canvas = render.canvas;
 //canvas.setAttribute('id', 'canvas');
