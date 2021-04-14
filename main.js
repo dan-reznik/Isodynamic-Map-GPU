@@ -1,12 +1,12 @@
 
 // debugging
-const gpu = new GPU({ mode: 'dev' });
+//const gpu = new GPU({ mode: 'dev' });
 //const gpu = new GPU({canvas:HTMLCanvasElement});
-//const gpu = new GPU();
+const gpu = new GPU();
 
 function sqr(x) { return x*x; }
 function sum3(sides) { return sides[0]+sides[1]+sides[2]; }
-function vscale(v,s) { return [s*v[0], s*v[1], s*v[2]]; }
+function vscale(v,s) { return [s*v[0], s*v[1]]; }
 function dist(u,v) { return Math.sqrt(sqr(u[0]-v[0])+sqr(u[1]-v[1])); }
 function dist2(u,v) { return sqr(u[0]-v[0])+sqr(u[1]-v[1]); }
 function vsum3(uvw) { const [u,v,w]=uvw; return [u[0] + v[0] + w[0], u[1] + v[1] + w[1]]; }
@@ -47,7 +47,7 @@ function tri_sides(p1,p2,p3) {
 
 function barys_to_cartesian(p1,p2,p3, bs) {
   const bs_sum = sum3(bs);
-  const tri_scaled = [bs[0]*p1,bs[1]*p2,bs[2]*p3];
+  const tri_scaled = [vscale(p1,bs[0]),vscale(p2,bs[1]),vscale(p3,bs[2])];
   const tri_scaled_norm = vscale(vsum3(tri_scaled), 1 / bs_sum);
   return tri_scaled_norm;
 }
@@ -65,13 +65,14 @@ function get_X16_map(t0,t1,t2,M) {
     return [p,q,r];
 }
 
-function tri_dist(p1,p2,p3,q1,q2,q3) { return dist2(p1[0],q1[0])+dist2(p2[1],q2[1])+dist2(p3[2],q3[2]); }
+function tri_dist(p1,p2,p3,q1,q2,q3) { return dist2(p1,q1)+dist2(p2,q2)+dist2(p3,q3); }
 
 function get_triple_X16_map_error(t0,t1,t2,M) {
     const [x1,y1,z1] = get_X16_map(t0,t1,t2,M);
     const [x2,y2,z2] = get_X16_map(x1,y1,z1,M);
     const [x3,y3,z3] = get_X16_map(x2,y2,z2,M);
-    return tri_dist(t0,t1,t2,x3,y3,z3);
+    const d2 = tri_dist(t0,t1,t2,x3,y3,z3);
+    return d2;
 }
 
 gpu.addFunction(sqr);
@@ -95,14 +96,14 @@ gpu.addFunction(get_triple_X16_map_error,
 const render = gpu.createKernel(function(t0,t1,t2) {
    const dim = 512;
    const half_dim = dim>>1;
-   const max = 3;
+   const max = 6;
    const i = this.thread.x;
    const j = this.thread.y;
    const x = max*(i-half_dim)/dim;
    const y = max*(j-half_dim)/dim;
 
   const err = get_triple_X16_map_error(t0,t1,t2, [x, y]);
-  if (err<1e-6) this.color(0,0,0, 1); else this.color(0,0,1, 1);
+  if (err<1e-6) this.color(0,0,1, 1); else this.color(.9,.9,.9, 1);
 }, {
   argumentTypes: { t0:'Array(2)', t1:'Array(2)', t2:'Array(2)' },
   constants: { dim: 512, max: 3 },
@@ -113,7 +114,8 @@ const render = gpu.createKernel(function(t0,t1,t2) {
 
 // equilateral
 const reg3 = [[1,0],[-.5,.866025],[-.5,-.866025]]; 
-render(new FloatArray(reg3[0]),new FloatArray(reg3[1]),new FloatArray(reg3[2]));
+//render(new Float32Array(reg3[0]),new Float32Array(reg3[1]),new Float32Array(reg3[2]));
+render(reg3[0],reg3[1],reg3[2]);
 
 const canvas = render.canvas;
 //canvas.setAttribute('id', 'canvas');
