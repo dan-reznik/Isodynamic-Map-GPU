@@ -99,6 +99,19 @@ function get_triple_X16_map_error(t0,t1,t2,M) {
     return d2;
 }
 
+
+function get_triple_X16_map_area_error(t0,t1,t2,M) {
+  const [x1,y1,z1] = get_X16_map(t0,t1,t2,M);
+  const [x2,y2,z2] = get_X16_map(x1,y1,z1,M);
+  const [x3,y3,z3] = get_X16_map(x2,y2,z2,M)
+  const s1=tri_sides_sqr(t0,t1,t2);
+  const s2=tri_sides_sqr(x3,y3,z3);
+  const d2 = triAreaHeronSqr(s2[0],s2[1],s2[2])/triAreaHeronSqr(s1[0],s1[1],s1[2]);
+  //const d2 = tri_dist_sqr(t0,t1,t2,x3,y3,z3);
+  return Math.log(1+d2);
+}
+
+/*
 function get_triple_X16_map_error_no_work(tri0,M) {
   const tri1 = get_X16_map(tri0,M);
   const tri2 = get_X16_map(tri1,M);
@@ -107,6 +120,7 @@ function get_triple_X16_map_error_no_work(tri0,M) {
   //const d2 = tri_dist_sqr([t0,t1,t2],[x3,y3,z3]);
   return d2;
 }
+*/
 
 /*
 gpu.addFunction(sqr);
@@ -132,19 +146,21 @@ gpu.addFunction(get_triple_X16_map_error,
 const render = gpu.createKernel(function(tri) {
    let dim = 1024; // this.constants.dim
    let half_dim = dim>>1;
-   let max = 6; // this.constants.max
+   let max = 5; // this.constants.max
    let i = this.thread.x;
    let j = this.thread.y;
    let x = max*(i-half_dim)/dim;
    let y = max*(j-half_dim)/dim;
 
   let err = get_triple_X16_map_error(tri[0],tri[1],tri[2], [x, y]);
+  //let err = get_triple_X16_map_area_error(tri[0],tri[1],tri[2], [x, y]);
   if (err<1e-9) this.color(0,0,1, 1); else this.color(.9,.9,.9, 1);
+  //this.color(255*err,255*err,255*err, 1);
 }, {
   //argumentTypes: { t0:'Array(2)', t1:'Array(2)', t2:'Array(2)' },
   argumentTypes: { tri:'Array1D(2)' },
 })
-.setConstants({ dim: 1024, max: 6 })
+.setConstants({ dim: 1024, max: 5 })
 .setGraphical(true)
 .setOutput([1024,1024]);
 
