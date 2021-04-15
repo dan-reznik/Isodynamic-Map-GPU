@@ -1,6 +1,6 @@
 # Identity zones of the triple isodynamic map
 
-The 1st and 2nd [isodynamic points](https://mathworld.wolfram.com/IsodynamicPoints.html) of a triangle (called X(15) and X(16) on Kimberling's [ETC](https://faculty.evansville.edu/ck6/encyclopedia/ETC.html)), are the two common intersections S and S' of 3 special circles which go thru a vertex V and the intersection of V's internal and external bisectors with the side opposite to V. These are known as Apollonius circles, two of which are shown green below:
+The 1st and 2nd [isodynamic points](https://mathworld.wolfram.com/IsodynamicPoints.html) of a triangle (called X(15) and X(16) on Kimberling's [ETC](https://faculty.evansville.edu/ck6/encyclopedia/ETC.html)), are the two common intersections S and S' of 3 special circles which go thru a vertex V and the intersection of V's internal (blue) and external (red) bisectors with the side opposite to V. These are known as Apollonius circles, two of which are shown green below:
 
 <img src="construction.png" alt="alt text" width="300">
 
