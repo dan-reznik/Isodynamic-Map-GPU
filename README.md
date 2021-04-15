@@ -15,3 +15,5 @@ The regions for which the triple isodynamic map is the identity are colored blue
 ![Triple Isodynamic Map](isodynamic.png)
 
 Note: there is significant salt-and-pepper noise along the boundary of the identity zones. This is due to low-precision floats in browser-based GPU calculations. We hope to fix this.
+
+Link to the live visualiation: [here](https://dan-reznik.github.io/Isodynamic-Map-GPU/)
