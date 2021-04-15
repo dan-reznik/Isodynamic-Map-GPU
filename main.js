@@ -108,6 +108,7 @@ gpu.addFunction(tri_dist_sqr, { argumentTypes: { p1: 'Array(2)', p2: 'Array(2)',
  q1: 'Array(2)', q2: 'Array(2)', q3: 'Array(2)' }, returnType: 'Number' });
 
 function get_triple_X16_map_error(t0, t1, t2, M) {
+  // had to unroll for GPU
   const p0=get_X16(M, t1, t2);
   const p1=get_X16(M, t2, t0);
   const p2=get_X16(M, t0, t1);
@@ -123,43 +124,64 @@ function get_triple_X16_map_error(t0, t1, t2, M) {
 gpu.addFunction(get_triple_X16_map_error,
   { argumentTypes: { t0: 'Array(2)', t1: 'Array(2)', t2: 'Array(2)', M: 'Array(2)' }, returnType: 'Number' });
 
+// Lemniscate da Gerono: https://mathworld.wolfram.com/EightCurve.html
+function get_curve_err(a,x,y) {
+  const x2 = x*x;
+  const err = x2*x2-a*a*(x2-y*y);
+  return err*err;
+}
+gpu.addFunction(get_curve_err);
 
+const displX=1,scaleX=2,scaleY=3;
 const render = gpu.createKernel(function (tri0, tri1, tri2) {
-  let dim = 512; // this.constants.dim
-  let half_dim = dim >> 1;
-  let max = 5; // this.constants.max
+  let dimX = this.constants.dimX>>1; // this.constants.dim
+  let dimY = this.constants.dimY>>1;
+  let maxX = this.constants.max;
+  let maxY = maxX*(dimY/dimX);
   let i = this.thread.x;
   let j = this.thread.y;
-  let x = max * (i - half_dim) / dim;
-  let y = max * (j - half_dim) / dim;
+  let x = maxX * (i - dimX) / dimX;
+  let y = maxY * (j - dimY) / dimY;
 
   //let err = get_triple_X16_map_area_error(tri[0],tri[1],tri[2], [x, y]);
 
-  let side_err = get_side_error(tri0, tri1, tri2, [x, y]);
-  if (side_err < 1e-2) this.color(1, 0, 0, 1); else {
-    let err2 = get_triple_X16_map_error(tri0, tri1, tri2, [x, y]);
-    if (err2 < 1e-6) this.color(0, 0, 1, 1); else
+  const displX=1,scaleX=2,scaleY=3;
+  if (get_side_error(tri0, tri1, tri2, [x, y]) < 1.5e-2)
+    this.color(1, 0, 0, 1);
+  else if (get_curve_err(.5,(displX-x)/scaleX,y/scaleY) < 1e-6)
+    this.color(0, 1, 0, 1);
+  else if (get_triple_X16_map_error(tri0, tri1, tri2, [x, y]) < 1e-6)
+    this.color(0, 0, 1, 1); else
     this.color(.9, .9, .9, 1);
-  }
   //  this.color(clr,clr,clr, 1);
 }, { argumentTypes: { tri0: 'Array(2)', tri1: 'Array(2)', tri2: 'Array(2)' } })
-  .setConstants({ dim: 512, max: 5 })
+  .setConstants({ dimX: 1920, dimY: 1080, max: 4 })
   .setGraphical(true)
-  .setOutput([512, 512]);
+  .setOutput([1920,1080]);
 //{ source: function, argumentTypes: object, returnType: string }
 //.setFunctions([{ source: get_triple_X16_map_error,
 //  argumentTypes:{ t0:'Array(2)', t1:'Array(2)', t2:'Array(2)', M:'Array(2)' }, returnType: 'Number' }]);
 // ??? kernel.setNativeFunctions(array)
 
-// equilateral
-const reg3 = [[1, 0], [-.5, .866025], [-.5, -.866025]];
-//render(new Float32Array(reg3[0]),new Float32Array(reg3[1]),new Float32Array(reg3[2]));
-//render(reg3[0],reg3[1],reg3[2]);
-render(...reg3);
 
+let reg3 = [[1, 0], [-.5, .866025], [-.5, -.866025]];
+let t = 0;
+render(...reg3);
 const canvas = render.canvas;
 //canvas.setAttribute('id', 'canvas');
 document.getElementsByTagName('body')[0].appendChild(canvas);
+
+let start;
+function oneFrame(timestamp) {
+  const r = 0.5;
+  if (start === undefined) start = timestamp;
+  const elapsed = timestamp - start;
+  reg3[0] = [displX+scaleX*r*Math.cos(elapsed/2000),scaleY*(r/2)*Math.sin(2*elapsed/2000)];
+  render(...reg3);
+  window.requestAnimationFrame(oneFrame);
+}
+
+window.requestAnimationFrame(oneFrame);
 
 /*
 function draw() {
