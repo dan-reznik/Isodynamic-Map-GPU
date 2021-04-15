@@ -4,7 +4,7 @@ Given a triangle T=ABC, its [isodynamic points](https://mathworld.wolfram.com/Is
 
 <img src="construction.png" alt="alt text" width="300">
 
-Let M denote a point in the plane of a triangle T=ABC (red below). Define the *2nd isodynamic map* as sending T to a new triangle T' (green) whose vertices are the X(16) of MBC,MCA,MAB:
+Let M be a point in the plane of T=ABC (red below). Define the *2nd isodynamic map* as sending T to a new triangle T' (green) whose vertices are the X(16) of MBC,MCA,MAB:
 
 <img src="plotX16.png" alt="alt text" width="300">
 
