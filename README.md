@@ -8,7 +8,7 @@ Consider a triangle T=ABC (red below) and a point M (interior or exterior to T).
 
 <img src="plotX16.png" alt="alt text" width="400">
 
-It turns out that given a starting T, there are *regions* of the plane such if M is in them, a thrice-applied 2nd isodynamic map returns T again, i.e., it is the identity. Note: the phenomenon described below does not work if X(15) is used.
+It turns out that given a starting T, there are *regions* for M such that a thrice-applied 2nd isodynamic map returns T again, i.e., it is the identity. Note: the phenomenon described below does not work if X(15) is used.
 
 We've implemented a [GPU](gpu.rocks)-based [animation](https://dan-reznik.github.io/Isodynamic-Map-GPU/) which shows the identity zones (blue) for a family of triangles (red) with two stationary vertices and one sliding along a lemniscate (green):
 
