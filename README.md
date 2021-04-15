@@ -2,7 +2,7 @@
 
 The first and second [isodynamic points](https://mathworld.wolfram.com/IsodynamicPoints.html) S and S' of a triangle (called X(15) and X(16) on Kimberling's [ETC](https://faculty.evansville.edu/ck6/encyclopedia/ETC.html), are the two intersections of the 3 Apollonius circles: consider a circle thru vertex V and he intersection of the opposite side with V's internal and external bisectors:
 
-![Construction of the Isodynamic Points](construction.png)
+<img src="construction.png" alt="alt text" width="300">
 
 Let M denote a point in the plane of a triangle T=ABC. Define the *2nd isodynamic map* as sending T to a new triangle T' whose vertices are the X(16) of MBC,MCA,MAB.
 
@@ -12,7 +12,7 @@ To visualize this in real time and on your browser, we've implemented a [GPU.js]
 
 The regions for which the triple isodynamic map is the identity are colored blue, some appear and disappear:
 
-![Triple Isodynamic Map](isodynamic.png)
+<img src="isodynamic.png" alt="alt text" width="600">
 
 Note: there is significant salt-and-pepper noise along the boundary of the identity zones. This is due to low-precision floats in browser-based GPU calculations. We hope to fix this.
 
