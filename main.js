@@ -146,12 +146,13 @@ const render = gpu.createKernel(function (tri0, tri1, tri2) {
   //let err = get_triple_X16_map_area_error(tri[0],tri[1],tri[2], [x, y]);
 
   const displX=1,scaleX=2,scaleY=3;
-  if (get_side_error(tri0, tri1, tri2, [x, y]) < 1.5e-2)
+  if (get_triple_X16_map_error(tri0, tri1, tri2, [x, y]) < 1e-6)
+    this.color(0, 0, 1, 1); else
+  if (get_side_error(tri0, tri1, tri2, [x, y]) < 2e-2)
     this.color(1, 0, 0, 1);
   else if (get_curve_err(.5,(displX-x)/scaleX,y/scaleY) < 1e-6)
     this.color(0, 1, 0, 1);
-  else if (get_triple_X16_map_error(tri0, tri1, tri2, [x, y]) < 1e-6)
-    this.color(0, 0, 1, 1); else
+   else
     this.color(.9, .9, .9, 1);
   //  this.color(clr,clr,clr, 1);
 }, { argumentTypes: { tri0: 'Array(2)', tri1: 'Array(2)', tri2: 'Array(2)' } })
