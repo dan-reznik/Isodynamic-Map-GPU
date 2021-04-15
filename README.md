@@ -14,7 +14,7 @@ After some exploration with [Wolfram Mathematica](https://www.wolfram.com/mathem
 
 So in the example above, the equilateral is sent to the green which is sent to the blue triangle, and then back to the equilateral, forever.
 
-Computing the identity zones with such sophisticated methods available in Mathematica is rather computationally expensive (a single frame may take minutes to hours to compute). With the amazing [GPU.js](gpu.rocks) library, we can leverage GPU-based parallelism (accessible from the browser!) and calculate said zones for a *moving* family of triangles (red) at dozens of frames per second!
+Computing the identity zones with Mathematica's `RegionPlot[]` produces beautiful results but it is rather computationally expensive (minutes to hours for a single frame). Enter the world of massive GPU parallelism and the amazing [GPU.js](gpu.rocks) library, we allows one to level this power directly from browser javascript. With it we can calculate identity zones for a *moving* family of triangles at dozens of frames per second!
 
 One frame of such an [animation](https://dan-reznik.github.io/Isodynamic-Map-GPU/) is shown below. The reference triangle is bounded by the three red lines. Its two left vertices are stationary and a third, right one moves along a lemniscate (green). The real-time computed identity zones are shown blue (the salt-and-pepper noise along its boundary is due to low precision currently available for GPU-based calculations. We hope to fix this soon).
 
