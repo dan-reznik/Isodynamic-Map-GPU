@@ -155,9 +155,9 @@ const render = gpu.createKernel(function (tri0, tri1, tri2) {
     this.color(.9, .9, .9, 1);
   //  this.color(clr,clr,clr, 1);
 }, { argumentTypes: { tri0: 'Array(2)', tri1: 'Array(2)', tri2: 'Array(2)' } })
-  .setConstants({ dimX: 1920, dimY: 1080, max: 4 })
+  .setConstants({ dimX: 1280, dimY: 720, max: 4 })
   .setGraphical(true)
-  .setOutput([1920,1080]);
+  .setOutput([1280,720]);
 //{ source: function, argumentTypes: object, returnType: string }
 //.setFunctions([{ source: get_triple_X16_map_error,
 //  argumentTypes:{ t0:'Array(2)', t1:'Array(2)', t2:'Array(2)', M:'Array(2)' }, returnType: 'Number' }]);
