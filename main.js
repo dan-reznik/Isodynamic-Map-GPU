@@ -39,10 +39,20 @@ function perp_err(v0, v1, p) {
 }
 gpu.addFunction(perp_err, { argumentTypes: { v0: 'Array(2)', v1: 'Array(2)', p: 'Array(2)' }, returnType: 'Number' });
 
+function closest_perp(l1,l2,p) {
+    const dl = vdiff(l2,l1);
+    const s = vdot(vdiff(p,l1),dl)/vdot(dl,dl);
+    return [l1[0]+s*dl[0], l1[1]+s*dl[1]];
+}
+gpu.addFunction(closest_perp, { argumentTypes: { l1: 'Array(2)', l2: 'Array(2)',p: 'Array(2)' }, returnType: 'Array(2)' });
+
 function get_side_error(t0, t1, t2, M) {
-  const e1 = Math.abs(perp_err(t0, t1, M));
-  const e2 = Math.abs(perp_err(t1, t2, M));
-  const e3 = Math.abs(perp_err(t2, t0, M));
+  const e1 = dist2(M,closest_perp(t0,t1,M));
+  const e2 = dist2(M,closest_perp(t1,t2,M));
+  const e3 = dist2(M,closest_perp(t2,t0,M));
+  //const e1 = Math.abs(perp_err(t0, t1, M));
+  //const e2 = Math.abs(perp_err(t1, t2, M));
+  //const e3 = Math.abs(perp_err(t2, t0, M));
   const err_min = Math.min(Math.min(e1, e2), e3);
   return err_min;
 }
@@ -148,7 +158,7 @@ const render = gpu.createKernel(function (tri0, tri1, tri2) {
   const displX=1,scaleX=2,scaleY=3;
   if (get_triple_X16_map_error(tri0, tri1, tri2, [x, y]) < 1e-6)
     this.color(0, 0, 1, 1); else
-  if (get_side_error(tri0, tri1, tri2, [x, y]) < 2e-2)
+  if (get_side_error(tri0, tri1, tri2, [x, y]) < 1e-4)
     this.color(1, 0, 0, 1);
   else if (get_curve_err(.5,(displX-x)/scaleX,y/scaleY) < 1e-6)
     this.color(0, 1, 0, 1);
