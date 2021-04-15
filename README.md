@@ -12,7 +12,7 @@ After some exploration with [Wolfram Mathematica](https://www.wolfram.com/mathem
 
 <img src="mathematica.png" alt="alt text" width="400">
 
-So for the example shown above, the map will oscillate forever between the initial equilateral (red), a green 1st generation, and a blue 2nd generation triangles, after which the sequence repeats forever.
+So in the example above, the equilateral is sent to the green which is sent to the blue triangle, and then back to the equilateral, forever.
 
 Computing the identity zones with great quality as possible with Mathematica may take minutes to hours. With the amazing [GPU.js](gpu.rocks) library, we can leverage GPU-based parallelism (accessible from the browser!) and calculate said zones for a *moving* family of triangles (red) at dozens of frames per second!
 
