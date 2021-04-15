@@ -4,9 +4,9 @@ Given a triangle T=ABC, its [isodynamic points](https://mathworld.wolfram.com/Is
 
 <img src="construction.png" alt="alt text" width="300">
 
-Let M be a point in the plane of T=ABC (red below). Define the *2nd isodynamic map* as sending T to a new triangle T' (green) whose vertices are the X(16) of MBC,MCA,MAB:
+Consider a triangle T=ABC (red below) and a point M (interior or exterior to T). Define the *2nd isodynamic map* as sending T to a new triangle T' (green) whose vertices are the X(16) of MBC,MCA,MAB:
 
-<img src="plotX16.png" alt="alt text" width="300">
+<img src="plotX16.png" alt="alt text" width="400">
 
 It turns out that given a starting T, there are entire *regions* of the plane such that the thrice-applied 2nd isodynamic map returns T again, i.e., it is the identity. Note: the phenomenon described below does not work if X(15) is used.
 
