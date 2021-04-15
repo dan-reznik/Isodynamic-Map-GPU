@@ -182,6 +182,17 @@ const canvas = render.canvas;
 //canvas.setAttribute('id', 'canvas');
 document.getElementsByTagName('body')[0].appendChild(canvas);
 
+
+function canvas_draw(ctx) {
+  //var ctx = cvs.getContext('2d');
+
+  ctx.beginPath();
+  ctx.moveTo(75, 50);
+  ctx.lineTo(100, 75);
+  ctx.lineTo(100, 25);
+  ctx.fill();
+}
+
 let start;
 function oneFrame(timestamp) {
   const r = 0.5;
@@ -189,22 +200,8 @@ function oneFrame(timestamp) {
   const elapsed = timestamp - start;
   reg3[0] = [displX+scaleX*r*Math.cos(elapsed/2000),scaleY*(r/2)*Math.sin(2*elapsed/2000)];
   render(...reg3);
+  //canvas_draw(render.canvas);
   window.requestAnimationFrame(oneFrame);
 }
 
 window.requestAnimationFrame(oneFrame);
-
-/*
-function draw() {
-  var canvas = document.getElementById('canvas');
-  if (canvas.getContext) {
-    var ctx = canvas.getContext('2d');
-
-    ctx.beginPath();
-    ctx.moveTo(75, 50);
-    ctx.lineTo(100, 75);
-    ctx.lineTo(100, 25);
-    ctx.fill();
-  }
-}
-draw();*/
