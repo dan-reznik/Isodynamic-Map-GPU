@@ -10,7 +10,7 @@ Let M be a point in the plane of T=ABC (red below). Define the *2nd isodynamic m
 
 It turns out that given a starting T, there are entire *regions* of the plane such that the thrice-applied 2nd isodynamic map returns T again, i.e., it is the identity. Note: the phenomenon described below does not work if X(15) is used.
 
-We've implemented a [GPU](gpu.rocks)-based [animation](https://dan-reznik.github.io/Isodynamic-Map-GPU/) which shows the identity zones (blue) for a family of triangles (red): two stationary vertices and one moving along a lemniscate (green):
+We've implemented a [GPU](gpu.rocks)-based [animation](https://dan-reznik.github.io/Isodynamic-Map-GPU/) which shows the identity zones (blue) for a family of triangles (red) with two stationary vertices and one sliding along a lemniscate (green):
 
 <img src="isodynamic.png" alt="alt text" width="600">
 
