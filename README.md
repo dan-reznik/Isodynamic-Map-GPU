@@ -8,7 +8,7 @@ Consider a triangle T=ABC (red below) and a point M (interior or exterior to T).
 
 <img src="plotX16.png" alt="alt text" width="400">
 
-After interactive exploration only possible with [Wolfram Mathematica](https://www.wolfram.com/mathematica/)'s `Manipulate[]`, we stumbled upon a curious observation: given a starting T, there are *zones* for M such that a thrice-applied 2nd isodynamic map returns T again, i.e., T^3 is the identity. When T is an equilateral (below), 6 such identity zones are formed (light blue): 3 exterior and 3 glued to each side (the latter we call "tents"):
+After interactive exploration only possible with [Wolfram Mathematica](https://www.wolfram.com/mathematica/)'s `Manipulate[]`, we stumbled upon a curious phenomenon: given a starting T, there are *zones* for M such that a thrice-applied 2nd isodynamic map returns T again, i.e., T^3 is the identity. When T is an equilateral (below), 6 such identity zones are formed (light blue): 3 exterior and 3 glued to each side (the latter we call "tents"):
 
 <img src="mathematica.png" alt="alt text" width="400">
 
