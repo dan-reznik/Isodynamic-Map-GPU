@@ -21,4 +21,4 @@ One frame of such an [animation](https://dan-reznik.github.io/Isodynamic-Map-GPU
 
 <img src="isodynamic.png" alt="alt text" width="600">
 
-Let your browser compute it [live](https://dan-reznik.github.io/Isodynamic-Map-GPU/)!
+Let your browser compute it [live](https://dan-reznik.github.io/Isodynamic-Map-GPU/)! (zoom out if you don't see the whole frame)
