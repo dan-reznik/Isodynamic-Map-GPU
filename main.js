@@ -5,7 +5,6 @@
 //const gpu = new GPU({canvas:HTMLCanvasElement});
 const gpu = new GPU();
 
-
 //function squared(x) { return x * x; }
 function sum3(sides) { return sides[0] + sides[1] + sides[2]; }
 function vscale(v, s) { return [s * v[0], s * v[1]]; }
@@ -166,6 +165,9 @@ const render = gpu.createKernel(function (tri0, tri1, tri2) {
     this.color(.9, .9, .9, 1);
   //  this.color(clr,clr,clr, 1);
 }, { argumentTypes: { tri0: 'Array(2)', tri1: 'Array(2)', tri2: 'Array(2)' } })
+  .setFixIntegerDivisionAccuracy(true)
+  .setPrecision('single')
+  .setTactic('precision')
   .setConstants({ dimX: 1280, dimY: 720, max: 4 })
   .setGraphical(true)
   .setOutput([1280,720]);
