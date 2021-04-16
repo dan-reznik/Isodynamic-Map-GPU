@@ -11,7 +11,7 @@ Consider a triangle T=ABC (red below) and a point M (interior or exterior to T).
 
 After interactive exploration only possible with [Wolfram Mathematica](https://www.wolfram.com/mathematica/)'s `Manipulate[]`, we stumbled upon a curious phenomenon: given a starting T, there are several 2d bounded *zones* (light blue below) such that if M is in one of them, a thrice-applied 2nd isodynamic map returns T again, i.e., T^3 is the identity. Below T is an equilateral (center red). Six identity zones are formed (light blue): 3 exterior "candy corns", and 3 "tents" externally pitched upon each side:
 
-<img src="mathematica.png" alt="alt text" width="400">
+<img src="mathematica.png" alt="alt text" width="600">
 
 So in the above, the (red) equilateral is sent to the green triangle, which is sent to the blue triangle, and then back to the red equilateral, etc. Moving M within an identity zone causes changes to both green an blue triangles, however a third application of the map is stationary and equal to the original T.
 
