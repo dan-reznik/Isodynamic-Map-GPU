@@ -12,7 +12,7 @@ After interactive exploration only possible with [Wolfram Mathematica](https://w
 
 <img src="mathematica.png" alt="alt text" width="400">
 
-So in the above, the (red) equilateral is sent to the green triangle, which is sent to the blue triangle, and then back to the red equilateral, forever if the map continued on! If M slides within an identity zone, the green an blue triangles do change, but a third application of the map winds up invariably back to the original.
+So in the above, the (red) equilateral is sent to the green triangle, which is sent to the blue triangle, and then back to the red equilateral, forever if the map continued on! If M slides within an identity zone, the green an blue triangles do change, but a third application of the map will invariably go back to the original.
 
 Computing the identity zones with Mathematica's `RegionPlot[]` produces beautiful results but it is rather computationally expensive (minutes to hours for a single frame). Enter the world of massive GPU parallelism and the amazing [GPU.js](gpu.rocks) library, we allows one to level this power directly from browser javascript. With it we can calculate identity zones for a *moving* family of triangles at dozens of frames per second!
 
